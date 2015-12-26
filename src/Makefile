@@ -1074,7 +1074,27 @@ BITCOIN_CORE_H = \
   script.h \
   scrypt_mine.h \
   serialize.h \
-  scrypt.h
+  scrypt.h \
+  sph_blake.h \
+  sph_bmw.h \
+  sph_cubehash.h \
+  sph_echo.h \
+  sph_groestl.h \
+  sph_jh.h \
+  sph_keccak.h \
+  sph_luffa.h \
+  sph_shavite.h \
+  sph_simd.h \
+  sph_skein.h \
+  sph_types.h \
+  sync.h \
+  tinyformat.h \
+  ui_interface.h \
+  uint256.h \
+  util.h \
+  version.h \
+  wallet.h \
+  walletdb.h
 
 JSON_H = \
   json/json_spirit.h \
@@ -4322,26 +4342,6 @@ uninstall-am: uninstall-binPROGRAMS
 
 
 .PHONY: FORCE
-  sph_blake.h \
-  sph_bmw.h \
-  sph_cubehash.h \
-  sph_echo.h \
-  sph_groestl.h \
-  sph_jh.h \
-  sph_keccak.h \
-  sph_luffa.h \
-  sph_shavite.h \
-  sph_simd.h \
-  sph_skein.h \
-  sph_types.h \
-  sync.h \
-  tinyformat.h \
-  ui_interface.h \
-  uint256.h \
-  util.h \
-  version.h \
-  wallet.h \
-  walletdb.h
 
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj

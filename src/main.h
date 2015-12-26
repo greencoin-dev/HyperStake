@@ -937,7 +937,9 @@ public:
 
     uint256 GetHash() const
     {
-	return scrypt_blockhash((const uint8_t*)&nVersion);
+	uint256 thash;
+     	scrypt_1024_1_1_256(BEGIN(nVersion), BEGIN(thash));
+    	return thash;
     }
 
     int64 GetBlockTime() const
