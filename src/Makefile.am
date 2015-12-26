@@ -58,6 +58,7 @@ BITCOIN_CORE_H = \
   script.h \
   scrypt_mine.h \
   serialize.h \
+  scrypt.h \
   sph_blake.h \
   sph_bmw.h \
   sph_cubehash.h \
@@ -125,6 +126,7 @@ libbitcoin_server_a_SOURCES = \
   shavite.c \
   simd.c \
   skein.c \
+  scrypt.cpp \
   $(JSON_H) \
   $(BITCOIN_CORE_H)
 

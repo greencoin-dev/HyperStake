@@ -11,7 +11,7 @@
 #include "script.h"
 #include "scrypt_mine.h"
 #include "hashblock.h"
-
+#include "scrypt.h"
 #include <list>
 
 class CWallet;
@@ -54,7 +54,7 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-static const uint256 hashGenesisBlockOfficial("0xb5dec123814cdc5f4492f68169f080ac683358b28f199408f471065e1a322714");
+static const uint256 hashGenesisBlockOfficial("0x000009b88ae01c8e009d08651c904a1b00f9e24d72538f49c242ba2ee14d859a");
 static const uint256 hashGenesisBlockTestNet ("0x534d8009c099b04d05d7475f48eea977ca2fedaf409e233c884eff34d2efdb8e");
 
 inline int64 GetClockDrift(int64 nTime)
@@ -937,7 +937,7 @@ public:
 
     uint256 GetHash() const
     {
-            return Hash9(BEGIN(nVersion), END(nNonce));
+	return scrypt_blockhash((const uint8_t*)&nVersion);
     }
 
     int64 GetBlockTime() const

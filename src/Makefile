@@ -199,7 +199,8 @@ am_libbitcoin_server_a_OBJECTS =  \
 	libbitcoin_server_a-script.$(OBJEXT) \
 	libbitcoin_server_a-shavite.$(OBJEXT) \
 	libbitcoin_server_a-simd.$(OBJEXT) \
-	libbitcoin_server_a-skein.$(OBJEXT) $(am__objects_1) \
+	libbitcoin_server_a-skein.$(OBJEXT) \
+	libbitcoin_server_a-scrypt.$(OBJEXT) $(am__objects_1) \
 	$(am__objects_1)
 libbitcoin_server_a_OBJECTS = $(am_libbitcoin_server_a_OBJECTS)
 libbitcoin_util_a_AR = $(AR) $(ARFLAGS)
@@ -1073,26 +1074,7 @@ BITCOIN_CORE_H = \
   script.h \
   scrypt_mine.h \
   serialize.h \
-  sph_blake.h \
-  sph_bmw.h \
-  sph_cubehash.h \
-  sph_echo.h \
-  sph_groestl.h \
-  sph_jh.h \
-  sph_keccak.h \
-  sph_luffa.h \
-  sph_shavite.h \
-  sph_simd.h \
-  sph_skein.h \
-  sph_types.h \
-  sync.h \
-  tinyformat.h \
-  ui_interface.h \
-  uint256.h \
-  util.h \
-  version.h \
-  wallet.h \
-  walletdb.h
+  scrypt.h
 
 JSON_H = \
   json/json_spirit.h \
@@ -1135,6 +1117,7 @@ libbitcoin_server_a_SOURCES = \
   shavite.c \
   simd.c \
   skein.c \
+  scrypt.cpp \
   $(JSON_H) \
   $(BITCOIN_CORE_H)
 
@@ -1852,6 +1835,7 @@ include ./$(DEPDIR)/libbitcoin_server_a-rpcmining.Po
 include ./$(DEPDIR)/libbitcoin_server_a-rpcnet.Po
 include ./$(DEPDIR)/libbitcoin_server_a-rpcrawtransaction.Po
 include ./$(DEPDIR)/libbitcoin_server_a-script.Po
+include ./$(DEPDIR)/libbitcoin_server_a-scrypt.Po
 include ./$(DEPDIR)/libbitcoin_server_a-shavite.Po
 include ./$(DEPDIR)/libbitcoin_server_a-simd.Po
 include ./$(DEPDIR)/libbitcoin_server_a-skein.Po
@@ -2427,6 +2411,20 @@ libbitcoin_server_a-script.obj: script.cpp
 #	$(AM_V_CXX)source='script.cpp' object='libbitcoin_server_a-script.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-script.obj `if test -f 'script.cpp'; then $(CYGPATH_W) 'script.cpp'; else $(CYGPATH_W) '$(srcdir)/script.cpp'; fi`
+
+libbitcoin_server_a-scrypt.o: scrypt.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-scrypt.o -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-scrypt.Tpo -c -o libbitcoin_server_a-scrypt.o `test -f 'scrypt.cpp' || echo '$(srcdir)/'`scrypt.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-scrypt.Tpo $(DEPDIR)/libbitcoin_server_a-scrypt.Po
+#	$(AM_V_CXX)source='scrypt.cpp' object='libbitcoin_server_a-scrypt.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-scrypt.o `test -f 'scrypt.cpp' || echo '$(srcdir)/'`scrypt.cpp
+
+libbitcoin_server_a-scrypt.obj: scrypt.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_server_a-scrypt.obj -MD -MP -MF $(DEPDIR)/libbitcoin_server_a-scrypt.Tpo -c -o libbitcoin_server_a-scrypt.obj `if test -f 'scrypt.cpp'; then $(CYGPATH_W) 'scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/scrypt.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libbitcoin_server_a-scrypt.Tpo $(DEPDIR)/libbitcoin_server_a-scrypt.Po
+#	$(AM_V_CXX)source='scrypt.cpp' object='libbitcoin_server_a-scrypt.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_server_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o libbitcoin_server_a-scrypt.obj `if test -f 'scrypt.cpp'; then $(CYGPATH_W) 'scrypt.cpp'; else $(CYGPATH_W) '$(srcdir)/scrypt.cpp'; fi`
 
 libbitcoin_util_a-clientversion.o: clientversion.cpp
 	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libbitcoin_util_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT libbitcoin_util_a-clientversion.o -MD -MP -MF $(DEPDIR)/libbitcoin_util_a-clientversion.Tpo -c -o libbitcoin_util_a-clientversion.o `test -f 'clientversion.cpp' || echo '$(srcdir)/'`clientversion.cpp
@@ -4324,6 +4322,26 @@ uninstall-am: uninstall-binPROGRAMS
 
 
 .PHONY: FORCE
+  sph_blake.h \
+  sph_bmw.h \
+  sph_cubehash.h \
+  sph_echo.h \
+  sph_groestl.h \
+  sph_jh.h \
+  sph_keccak.h \
+  sph_luffa.h \
+  sph_shavite.h \
+  sph_simd.h \
+  sph_skein.h \
+  sph_types.h \
+  sync.h \
+  tinyformat.h \
+  ui_interface.h \
+  uint256.h \
+  util.h \
+  version.h \
+  wallet.h \
+  walletdb.h
 
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
