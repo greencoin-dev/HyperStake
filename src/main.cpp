@@ -948,22 +948,9 @@ static const int CUTOFF_HEIGHT = POW_CUTOFF_HEIGHT;
 // miner's coin base reward based on nBits
 int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 {
-    int64 nSubsidy = 0;
-	if(fTestNet)
-	{
-		if(nHeight == 1)
-			nSubsidy = 50000000 * COIN; // 50 million premine for testnet so we can be rich
-		else
-			nSubsidy = 1000 * COIN;
-		return nSubsidy + nFees;
-	}
-	
-	nSubsidy = 500 * COIN;
-	if(nHeight == 1)
-	{
-		nSubsidy = 120000 * COIN;
-		return nSubsidy + nFees;
-	}
+    int64 nSubsidy = 4000 * COIN;
+    if(nHeight == 1)
+	nSubsidy = 3161928000 * COIN;
     return nSubsidy + nFees;
 }
 
@@ -972,43 +959,8 @@ int64 GetProofOfWorkReward(int nHeight, int64 nFees, uint256 prevHash)
 
 int64 GetProofOfStakeReward(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
 {
-	int64 nSubsidy = 0;
-	
-	if ( nTime > FORK_TIME )
-		nSubsidy = GetProofOfStakeRewardV2(nCoinAge, nBits, nTime,nHeight);
-	else
-		nSubsidy = GetProofOfStakeRewardV1(nCoinAge, nBits, nTime, nHeight);
-		
+	int64 nSubsidy = 4000 * COIN;;
 	return nSubsidy;
-}	
-	
-int64 GetProofOfStakeRewardV1(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
-{
-    int64 nRewardCoinYear;
-
-	nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-
-    int64 nSubsidy = nCoinAge * nRewardCoinYear / 365;
-
-	if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
-    return nSubsidy;
-}	
-
-int64 GetProofOfStakeRewardV2(int64 nCoinAge, unsigned int nBits, unsigned int nTime, int nHeight)
-{
-    int64 nRewardCoinYear, nSubsidyLimit = 1000 * COIN;
-
-	nRewardCoinYear = MAX_MINT_PROOF_OF_STAKEV2;
-
-    int64 nSubsidy = nCoinAge * nRewardCoinYear / 365;
-
-	if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRI64d" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
-		
-	nSubsidy = min(nSubsidy, nSubsidyLimit);
-	 
-    return nSubsidy;
 }
 
 static const int64 nTargetTimespan = 60 * 60;
