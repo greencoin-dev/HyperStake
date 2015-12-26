@@ -32,14 +32,17 @@ static std::map<int, unsigned int> mapStakeModifierCheckpoints =
 // Get time weight
 int64 GetWeight(int64 nIntervalBeginning, int64 nIntervalEnd)
 {
-    return min(nIntervalEnd - nIntervalBeginning - nStakeMinAge, (int64)nStakeMaxAge);
+    // Kernel hash weight starts from 0 at the min age
+    // this change increases active coins participating the hash and helps
+    // to secure the network when proof-of-stake difficulty is low
+
+    return nIntervalEnd - nIntervalBeginning - nStakeMinAge;
 }
 
 // Get time weight 2 - This is added for informational purposes since staking takes 8.8 days min approx. because of bug
 int64 GetWeight2(int64 nIntervalBeginning, int64 nIntervalEnd)
 {
-	int64 nTimePassed = nIntervalEnd - nIntervalBeginning;
-	return min(nTimePassed, (int64)nStakeMaxAge) - nStakeMinAge;
+	return GetWeight(nIntervalBeginning, nIntervalEnd);
 }
 
 // Get the last stake modifier and its generation time from a given block
@@ -60,8 +63,8 @@ static bool GetLastStakeModifier(const CBlockIndex* pindex, uint64& nStakeModifi
 static int64 GetStakeModifierSelectionIntervalSection(int nSection)
 {
     assert (nSection >= 0 && nSection < 64);
-    int64 a = getIntervalVersion(fTestNet) * 63 / (63 + ((63 - nSection) * (MODIFIER_INTERVAL_RATIO - 1)));
-	return a;
+    int64 a = (nModifierInterval * 63 / (63 + ((63 - nSection) * (MODIFIER_INTERVAL_RATIO - 1))));
+    return a;
 }
 
 // Get stake modifier selection interval (in seconds)
@@ -249,7 +252,7 @@ static bool GetKernelStakeModifier(uint256 hashBlockFrom, uint64& nStakeModifier
                     pindex->GetBlockHash().ToString().c_str(), pindex->nHeight, hashBlockFrom.ToString().c_str());
             else
 			{
-				//printf("FAILED BECAUSE no pindexnext\n");
+				printf("FAILED BECAUSE no pindexnext\n");
 				return false;
 			}
                 
@@ -341,6 +344,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
 	int nStakeModifierHeight = 0;
 	int64 nStakeModifierTime = 0;
 	if (!GetKernelStakeModifier(blockFrom.GetHash(), nStakeModifier, nStakeModifierHeight, nStakeModifierTime, fPrintProofOfStake))
+		printf("GetKernelStakeModifier() : Return False")
 		return false;
 		
 	//create data stream once instead of repeating it in the loop

@@ -43,8 +43,8 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24;	// time at which weight begins to build
-unsigned int nStakeMinAgeV2 = 60 * 60 * 24;	// functionally the minimum age is 8.8 days
+unsigned int nStakeMinAge = 60;	// time at which weight begins to build
+unsigned int nStakeMinAgeV2 = 60;	// functionally the minimum age is 8.8 days
 unsigned int nStakeMaxAge =-1;	// stake age of full weight: -1
 unsigned int nStakeTargetSpacing = 120;			// 90 sec block spacing
 

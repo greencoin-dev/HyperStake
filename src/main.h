@@ -36,14 +36,8 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 30000;
 static const int64 MIN_TX_FEE = .00001 * COIN;
 static const int64 MIN_RELAY_TX_FEE = .00001 * COIN;
-static const int64 MAX_MONEY = 60000000 * COIN;
-static const int64 MAX_MONEY2 = 60000000 * COIN;			// 60 mil
-static const int64 MAX_MINT_PROOF_OF_STAKE = 2.00 * COIN;	// 200% annual interest
-static const int64 MAX_MINT_PROOF_OF_STAKEV2 = 7.50 * COIN;	// 750% annual interest
-static const unsigned int FORK_TIME = 1404678625; // Sun, 06 Jul 2014 20:30:25 GMT
-static const unsigned int FORK_TIME2 = 1423836000; // Fri, 13 Feb 2015 14:00:00 GMT
+static const int64 MAX_MONEY = 3161928000 * COIN;
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
-
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
@@ -59,10 +53,7 @@ static const uint256 hashGenesisBlockTestNet ("0x534d8009c099b04d05d7475f48eea97
 
 inline int64 GetClockDrift(int64 nTime)
 {
-	if(nTime < FORK_TIME2)
-		return 15 * 60;
-	else
-		return 60;
+	return 60;
 }
 static const int64 MAX_TIME_SINCE_BEST_BLOCK = 10; // how many seconds to wait before sending next PushGetBlocks()
 extern CScript COINBASE_FLAGS;
