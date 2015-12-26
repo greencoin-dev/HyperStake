@@ -43,12 +43,12 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 8;	// time at which weight begins to build
-unsigned int nStakeMinAgeV2 = 60 * 60 * 24 * 88 / 10;	// functionally the minimum age is 8.8 days
-unsigned int nStakeMaxAge = 60 * 60 * 24 * 30;	// stake age of full weight: -1
-unsigned int nStakeTargetSpacing = 90;			// 90 sec block spacing
+unsigned int nStakeMinAge = 60 * 60 * 24;	// time at which weight begins to build
+unsigned int nStakeMinAgeV2 = 60 * 60 * 24;	// functionally the minimum age is 8.8 days
+unsigned int nStakeMaxAge =-1;	// stake age of full weight: -1
+unsigned int nStakeTargetSpacing = 120;			// 90 sec block spacing
 
-int64 nChainStartTime = 1399495660;
+int64 nChainStartTime = 1450199185;
 int nCoinbaseMaturity = 10;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -59,7 +59,7 @@ CBlockIndex* pindexBest = NULL;
 int64 nTimeBestReceived = 0;
 bool fHaveGUI = false;
 
-CMedianFilter<int> cPeerBlockCounts(5, 0); // Amount of blocks that other nodes claim to have
+CMedianFilter<int> cPeerBlockCounts(0, 0); // Amount of blocks that other nodes claim to have
 
 map<uint256, CBlock*> mapOrphanBlocks;
 multimap<uint256, CBlock*> mapOrphanBlocksByPrev;
@@ -2648,52 +2648,27 @@ bool LoadBlockIndex(bool fAllowNew)
             return false;
 
         // Genesis block
-        const char* pszTimestamp = "29/5/14 - Replica Ghostbusters car stops the traffic - BBC UK";
-        CTransaction txNew;
-        txNew.nTime = nChainStartTime;
-        txNew.vin.resize(1);
-        txNew.vout.resize(1);
-        txNew.vin[0].scriptSig = CScript() << 486604799 << CBigNum(9999) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
-        txNew.vout[0].SetEmpty();
+        const char* pszTimestamp = "GreenCoinV2 Launches.";
+	std::vector<CTxIn> vin;
+        vin.resize(1);
+        vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+        std::vector<CTxOut> vout;
+        vout.resize(1);
+        vout[0].SetEmpty();
+        CTransaction txNew(1, 1393221600, vin, vout, 0);
 
         CBlock block;
         block.vtx.push_back(txNew);
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1401331380;
+        block.nTime    = 1450199185;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 1779291;
-        if(fTestNet)
-		{
-			block.nTime = 1424304823;
-			block.nNonce = 0;
-		}
-		
-		if (false ) {
-
-        // This will figure out a valid hash and Nonce if you're
-        // creating a different genesis block:
-            uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
-            while (block.GetHash() > hashTarget)
-               {
-                   ++block.nNonce;
-                   if (block.nNonce == 0)
-                   {
-                       printf("NONCE WRAPPED, incrementing time");
-                       ++block.nTime;
-                   }
-               }
-        }
-        //// debug print
+        block.nNonce   = 921682;
         block.print();
-        printf("block.GetHash() == %s\n", block.GetHash().ToString().c_str());
-        printf("block.hashMerkleRoot == %s\n", block.hashMerkleRoot.ToString().c_str());
-        printf("block.nTime = %u \n", block.nTime);
-        printf("block.nNonce = %u \n", block.nNonce);
 
-        assert(block.hashMerkleRoot == uint256("37ad323037e6e55553fadebbe60690a1bff2752f947b7af8cb6b54929f5fee3d"));
-		assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
+        assert(block.hashMerkleRoot == uint256("0xf13219df992036c16529305d015d11fe84ee11550d060bfed7a8cc58951040c4"));
+	assert(block.GetHash() == hashGenesisBlock);
 
         // Start new block file
         unsigned int nFile;
@@ -2980,7 +2955,7 @@ bool static AlreadyHave(CTxDB& txdb, const CInv& inv)
 // The message start string is designed to be unlikely to occur in normal data.
 // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xdb, 0xad, 0xbd, 0xda };
+unsigned char pchMessageStart[4] = { 0x05, 0x22, 0x53, 0x07 };
 unsigned int nLastMapGetBlocksClear = 0;
 
 bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)

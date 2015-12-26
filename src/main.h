@@ -27,7 +27,7 @@ class CRequestTracker;
 class CNode;
 
 
-#define POW_CUTOFF_HEIGHT 21000
+#define POW_CUTOFF_HEIGHT 300
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -54,7 +54,7 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-static const uint256 hashGenesisBlockOfficial("0x000005fe04e512585c3611369c7ce23f130958038c18a462577d002680dab4fc");
+static const uint256 hashGenesisBlockOfficial("0xb5dec123814cdc5f4492f68169f080ac683358b28f199408f471065e1a322714");
 static const uint256 hashGenesisBlockTestNet ("0x534d8009c099b04d05d7475f48eea977ca2fedaf409e233c884eff34d2efdb8e");
 
 inline int64 GetClockDrift(int64 nTime)
@@ -464,6 +464,10 @@ public:
     CTransaction()
     {
         SetNull();
+    }
+    CTransaction(int nVersion, unsigned int nTime, const std::vector<CTxIn>& vin, const std::vector<CTxOut>& vout, unsigned int nLockTime)
+        : nVersion(nVersion), nTime(nTime), vin(vin), vout(vout), nLockTime(nLockTime), nDoS(0)
+    {
     }
 
     IMPLEMENT_SERIALIZE
